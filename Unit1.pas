@@ -32,47 +32,47 @@ procedure TForm1.Button1Click(Sender: TObject);
 var
   CaminhoAnexo: string;
 begin
-// instanciaÁ„o dos objetos
+// instancia√ß√£o dos objetos
   IdSSLIOHandlerSocket := TIdSSLIOHandlerSocket.Create(Self);
   IdSMTP := TIdSMTP.Create(Self);
   IdMessage := TIdMessage.Create(Self);
  
   try
-    // ConfiguraÁ„o do SSL
+    // Configura√ß√£o do SSL
     IdSSLIOHandlerSocket.SSLOptions.Method := sslvSSLv23;
     IdSSLIOHandlerSocket.SSLOptions.Mode := sslmClient;
  
-    // ConfiguraÁ„o do SMTP
+    // Configura√ß√£o do SMTP
     IdSMTP.IOHandler := IdSSLIOHandlerSocket;
     IdSMTP.AuthenticationType := atLogin;
     IdSMTP.Port := 465;
     IdSMTP.Host := 'smtp.gmail.com';
-    IdSMTP.Username := 'programador.marca';
-    IdSMTP.Password := 'Umanovasenh@fort3';
+    IdSMTP.Username := 'programador';
+    IdSMTP.Password := 'suasenha';
  
-    // Tentativa de conex„o e autenticaÁ„o
+    // Tentativa de conex√£o e autentica√ß√£o
     try
       IdSMTP.Connect;
       IdSMTP.Authenticate;
     except
       on E:Exception do
       begin
-        MessageDlg('Erro na conex„o e/ou autenticaÁ„o: ' +
+        MessageDlg('Erro na conex√£o e/ou autentica√ß√£o: ' +
                     E.Message, mtWarning, [mbOK], 0);
         Exit;
       end;
     end;
  
-    // ConfiguraÁ„o da mensagem
-    IdMessage.From.Address := 'programador.marca@gmail.com';
+    // Configura√ß√£o da mensagem
+    IdMessage.From.Address := 'programador@gmail.com';
     IdMessage.From.Name := 'Programador';
     IdMessage.ReplyTo.EMailAddresses := IdMessage.From.Address;
     IdMessage.Recipients.EMailAddresses := 'pececarvalho@gmail.com';
     IdMessage.Subject := 'Teste de envio via Delphi 7';
-    IdMessage.Body.Text := 'Se vocÍ est· lendo este email È bingo!';
+    IdMessage.Body.Text := 'Se voc√™ est√° lendo este email √© bingo!';
  
     // Anexo da mensagem (opcional)
-    CaminhoAnexo := 'D:\Sistemas\TEST\MandaEmail\Unit1.pas';
+    CaminhoAnexo := 'anexo.zip';
     if FileExists(CaminhoAnexo) then
       TIdAttachment.Create(IdMessage.MessageParts, CaminhoAnexo);
  
@@ -86,7 +86,7 @@ begin
                     E.Message, mtWarning, [mbOK], 0);
     end;
   finally
-    // liberaÁ„o dos objetos da memÛria
+    // libera√ß√£o dos objetos da mem√≥ria
     FreeAndNil(IdMessage);
     FreeAndNil(IdSSLIOHandlerSocket);
     FreeAndNil(IdSMTP);
